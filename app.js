@@ -1,16 +1,18 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const Campground = require('./models/campground')
+const Campground = require('./models/campground');
 
-mongoose.connect('mongodb://localhost:27017/yelp-calm')
-    .then(()=>{
-        console.log("connection open!! congrats!!");
-    })
-    .catch(err=>{
-        console.log("Oh noo!! error came run away!!!");
-        console.log(err);
-    });
+const DB = 'mongodb+srv://ravi:ravi@cluster0.ctqjq.mongodb.net/yelpcalm?retryWrites=true&w=majority';
+
+mongoose.connect(DB)
+.then(()=>{
+    console.log(`connection successfull with the database!!`);
+})
+.catch((e)=>{
+    console.log(`sorry the connection is not successfull`);
+    console.log(e);
+});
 
 const app = express();
 
