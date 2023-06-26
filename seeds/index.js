@@ -3,7 +3,7 @@ const {descriptors, places} = require('./seedHelpers');
 const Campground = require('../models/campground');
 const mongoose = require('mongoose');
 
-const DB = 'mongodb+srv://ravi:ravi@cluster0.ctqjq.mongodb.net/yelpcalm?retryWrites=true&w=majority';
+const DB = 'mongodb+srv://ravi:ravi@cluster0.5mopirv.mongodb.net/?retryWrites=true&w=majority';
 
 mongoose.connect(DB)
 .then(()=>{

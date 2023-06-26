@@ -6,7 +6,7 @@ const methodOverride = require('method-override');
 const { redirect } = require('express/lib/response');
 
 
-const DB = 'mongodb+srv://ravi:ravi@cluster0.ctqjq.mongodb.net/yelpcalm?retryWrites=true&w=majority';
+const DB = 'mongodb+srv://ravi:ravi@cluster0.5mopirv.mongodb.net/?retryWrites=true&w=majority';
 
 mongoose.connect(DB)
 .then(()=>{
