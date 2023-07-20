@@ -5,6 +5,10 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash')
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
+
 const { redirect } = require('express/lib/response');
 const { error } = require('console');
 
@@ -12,6 +16,7 @@ const { error } = require('console');
 
 const campgroundRoute = require('./routes/campgrounds');
 const reviewRoute = require('./routes/reviews');
+const userRoute = require('./routes/users');
 
 const DB = 'mongodb+srv://ravi:ravi@cluster0.5mopirv.mongodb.net/?retryWrites=true&w=majority';
 
@@ -44,8 +49,16 @@ const sessionConfig = {
         maxAge: 1000*60*60*24*7
     }
 }
+
+
 app.use(session(sessionConfig))
 app.use(flash())
+app.use(passport.initialize());
+app.use(passport.session()); //session must be above this
+passport.use(new LocalStrategy(User.authenticate()))
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //flash
 app.use((req, res, next)=>{
@@ -54,9 +67,17 @@ app.use((req, res, next)=>{
     next();
 })
 
+//using passport 
+app.get('/makeuser', async (req, res)=>{
+    const user = new User({email: 'ravi@gmai.com', username : 'ravi'})
+    const newUser = await User.register(user, 'ravi');
+    res.send(newUser);
+})
+
 //Router
 app.use('/campgrounds', campgroundRoute);
 app.use('/campgrounds/:id/reviews', reviewRoute);
+app.use('/', userRoute);
 
 app.get('/', (req, res) => {
     res.render('home')
