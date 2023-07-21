@@ -1,7 +1,6 @@
 module.exports.isLoggedIn = (req, res, next)=>{
-    // console.log("REQ.USER...", req.user);
+    console.log("REQ.USER...", req.user);
     if(!req.isAuthenticated()){
-
         //store the url currently on 
         req.session.returnTo = req.originalUrl; 
         req.flash('error' , 'you must be singed in to access this');
